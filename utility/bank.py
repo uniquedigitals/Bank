@@ -1,112 +1,60 @@
 class Bank:
-    def __init__(self, name, account_number, pin="0000", balance=100, credit_limit=100000):
+    def __init__(self, name, account_number, pin="0000", balance=100.0, credit_limit=100000.0):
         self.name = name
         self.account_number = str(account_number)
         self.balance = float(balance)
         self.pin = str(pin)
         self.credit_limit = float(credit_limit)
 
-    def info(self):
-        data = {
-            "name": self.name,
-            "account_number": self.account_number,
-            "balance": f"${self.balance:.2f}",
-            "credit_limit": f"${self.credit_limit:.2f}",
-        }
-        for key, value in data.items():
-            print(f"{key.replace('_', ' ').title()}: {value}")
-
-    def check_balance(self):
-        print(f"Your current balance is ${self.balance:.2f}")
-
-    def deposit(self):
+    def deposit(self, amount):
         try:
-            amount = float(input("Enter amount to deposit: "))
+            amount = float(amount)
             if amount <= 0:
-                print("Invalid amount. Must be greater than 0.")
-                return
+                return False, "Invalid amount. Must be greater than $0.00."
 
             self.balance += amount
             self.credit_limit += amount / 10
-            print(f"${amount:.2f} deposited successfully.")
-            self.check_balance()
-        except ValueError:
-            print("Invalid input! Please enter a valid numerical amount.")
+            return True, f"${amount:.2f} deposited successfully."
+        except (ValueError, TypeError):
+            return False, "Invalid input! Please enter a valid numerical amount."
 
-    def withdraw(self):
+    def withdraw(self, amount):
         try:
-            amount = float(input("Enter amount to withdraw: "))
+            amount = float(amount)
             if amount <= 0:
-                print("Invalid amount. Must be greater than 0.")
-                return
+                return False, "Invalid amount. Must be greater than $0.00."
             if amount > self.balance:
-                print("Insufficient balance.")
-                return
+                return False, "Insufficient balance."
 
             self.balance -= amount
             self.credit_limit -= amount / 10
-            print(f"${amount:.2f} withdrawn successfully.")
-            self.check_balance()
-        except ValueError:
-            print("Invalid input! Please enter a valid numerical amount.")
+            return True, f"${amount:.2f} withdrawn successfully."
+        except (ValueError, TypeError):
+            return False, "Invalid input! Please enter a valid numerical amount."
 
-    def transfer(self):
+    def transfer(self, amount, target_number, accounts_list):
         try:
-            amount = float(input("Enter amount to transfer: "))
+            amount = float(amount)
             if amount <= 0:
-                print("Invalid amount.")
-                return
+                return False, "Invalid amount."
             if amount > self.balance:
-                print("Insufficient funds for this transfer.")
-                return
+                return False, "Insufficient funds for this transfer."
 
-            target_number = input("Enter destination account number: ").strip()
+            target_number = str(target_number).strip()
 
             if target_number == self.account_number:
-                print("You cannot transfer money to your own account.")
-                return
+                return False, "You cannot transfer money to your own account."
 
-            target_account = None
-            for acc in accounts:
-                if acc.account_number == target_number:
-                    target_account = acc
-                    break
+            target_account = next((acc for acc in accounts_list if acc.account_number == target_number), None)
 
             if target_account:
                 self.balance -= amount
                 target_account.balance += amount
-                print(
-                    f"${amount:.2f} transferred successfully to Account: {target_account.account_number} ({target_account.name})")
-                self.check_balance()
+                return True, f"${amount:.2f} transferred successfully to {target_account.name} ({target_account.account_number})."
             else:
-                print("Account number not found.")
-        except ValueError:
-            print("Invalid input! Please enter a valid numerical amount.")
-
-    def cancel(self):
-        print("\nThank you for using Our Bank. Goodbye!")
-        exit()
-
-    def menu(self):
-        options = {
-            '1': ['Account Info', self.info],
-            '2': ['Check Balance', self.check_balance],
-            '3': ['Deposit', self.deposit],
-            '4': ['Withdraw', self.withdraw],
-            '5': ['Transfer', self.transfer],
-            '0': ['Logout', self.cancel]
-        }
-
-        print(f"\n=== Welcome, {self.name} ===")
-        for key, value in options.items():
-            print(f"[{key}] {value[0]}")
-
-        choice = input("Select an option: ").strip()
-
-        if choice in options:
-            options[choice][1]()
-        else:
-            print("Invalid selection. Please try again.")
+                return False, "Destination account number not found."
+        except (ValueError, TypeError):
+            return False, "Invalid input! Please enter a valid numerical amount."
 
 
 # Account database setup
