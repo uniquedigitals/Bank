@@ -58,8 +58,8 @@ class Bank:
 
 
 # Account database setup
-tolu = Bank("Tolu Ademola", "123456", pin="1234", balance=600)
-sola = Bank("Sola Ilesanmi", "23456", pin="1224", balance=800)
-samuel = Bank("Samuel Olaide", "123446", pin="1334", balance=100)
+tolu = Bank("Tolu Ademola", "12345", pin="0000", balance=600)
+sola = Bank("Sola David", "67890", pin="11111", balance=800)
+samuel = Bank("Samuel Olaide", "22222", pin="2222", balance=100)
 
 accounts = [tolu, sola, samuel]
