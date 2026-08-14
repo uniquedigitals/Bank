@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from utility.bank import accounts
-
+from services import current_time
 # Create a Blueprint instance
 bank_bp = Blueprint('bank', __name__)
 
@@ -20,10 +20,11 @@ def get_current_user():
 
 @bank_bp.route('/')
 def index():
+    time = current_time
     user = get_current_user()
     if not user:
         return redirect(url_for('bank.login'))
-    return render_template('index.html', account=user)
+    return render_template('index.html', account=user, time=time)
 
 
 @bank_bp.route('/login', methods=['GET', 'POST'])
