@@ -20,7 +20,7 @@ def get_current_user():
 
 @bank_bp.route('/')
 def index():
-    time = current_time
+    time = current_time()
     user = get_current_user()
     if not user:
         return redirect(url_for('bank.login'))
