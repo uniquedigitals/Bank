@@ -1,0 +1,58 @@
+/* ==========================================================================
+   1. Base & Layout
+   ========================================================================== */
+body {
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   2. Typography & Text Utilities
+   ========================================================================== */
+.fs-7 { font-size: 0.85rem; }
+.fs-8 { font-size: 0.75rem; }
+
+.leading-none { line-height: 1; }
+
+.tracking-tight { letter-spacing: -0.03em; }
+.tracking-wide,
+.tracking-wider { letter-spacing: 0.08em; }
+
+/* ==========================================================================
+   3. Navigation Styling
+   ========================================================================== */
+.navbar .nav-link {
+    transition: color 0.15s ease-in-out;
+}
+
+.navbar .nav-link:hover {
+    color: var(--bs-primary) !important;
+}
+
+/* ==========================================================================
+   4. Component Enhancements
+   ========================================================================== */
+/* Action Cards Elevation */
+.action-card {
+    will-change: transform, box-shadow;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Glassmorphism Effect */
+.backdrop-blur {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+/* Accessibility: Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+    .action-card,
+    .navbar .nav-link {
+        transition: none !important;
+        transform: none !important;
+    }
+}

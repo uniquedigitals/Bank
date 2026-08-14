@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block title %}Check Balance - Bank ATM{% endblock %}
+
+{% block content %}
+<div class="card shadow border-0 rounded-3">
+    <div class="card-header bg-primary text-white text-center py-3">
+        <h4 class="mb-0 fw-semibold">Account Balance Details</h4>
+    </div>
+
+    <div class="card-body p-4 text-center">
+        <p class="text-muted mb-1">Account Holder</p>
+        <h5 class="fw-bold">{{ account.name }}</h5>
+        <p class="text-muted small">Account #: <span class="badge bg-secondary font-monospace">{{ account.account_number }}</span></p>
+
+        <hr class="my-4">
+
+        <div class="my-3">
+            <span class="text-uppercase text-muted tracking-wide small">Available Balance</span>
+            <h1 class="display-4 fw-bold text-success my-2">${{ "%.2f"|format(account.balance) }}</h1>
+        </div>
+
+        <div class="bg-light p-3 rounded-3 border mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted">Credit Limit:</span>
+                <span class="fw-bold">${{ "%.2f"|format(account.credit_limit) }}</span>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2">
+            <a href="{{ url_for('bank.index') }}" class="btn btn-outline-secondary">← Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

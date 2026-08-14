@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block title %}Deposit - Bank ATM{% endblock %}
+
+{% block content %}
+<div class="card shadow border-0 rounded-3">
+    <div class="card-header bg-primary text-white text-center py-3">
+        <h4 class="mb-0 fw-semibold">Deposit Funds</h4>
+    </div>
+
+    <div class="card-body p-4">
+        <!-- Current Balance Summary -->
+        <div class="bg-light p-3 rounded-3 border mb-4 text-center">
+            <span class="text-muted small">Current Balance</span>
+            <h3 class="fw-bold text-success mb-0">${{ "%.2f"|format(account.balance) }}</h3>
+        </div>
+
+        <form action="{{ url_for('bank.deposit') }}" method="POST">
+            <div class="mb-4">
+                <label for="amount" class="form-label fw-semibold">Amount to Deposit ($)</label>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text">$</span>
+                    <input type="number" step="0.01" min="0.01" class="form-control" id="amount" name="amount" placeholder="0.00" required autofocus>
+                </div>
+                <div class="form-text">Every deposit increases your credit limit by 10% of the deposit value.</div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg shadow-sm">Confirm Deposit</button>
+                <a href="{{ url_for('bank.index') }}" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends 'layout.html' %}
+
+{% block title %}Dashboard - UNIQUE BANK{% endblock %}
+
+{% block content %}
+<!-- Professional Bank Hero Header -->
+<div class="card border-0 shadow-sm rounded-4 mb-4 bg-white overflow-hidden">
+    <div class="card-body p-4 p-md-5">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div>
+                <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill mb-2">
+                    <i class="bi bi-shield-check me-1"></i> Active Checking Account
+                </span>
+                <h2 class="fw-bold text-dark mb-1">Welcome back, {{ account.name }}</h2>
+                <p class="text-secondary mb-0">
+                    Account No:
+                    <span class="font-monospace fw-semibold text-dark">{{ account.account_number }}</span>
+                </p>
+            </div>
+            <div class="text-md-end">
+                <span class="d-block text-uppercase text-muted fs-7 fw-bold tracking-wider">Account Status</span>
+                <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fw-semibold">
+                    ● Verified & Operational
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Balance & Financial Overview Cards -->
+<div class="row g-3 mb-4">
+    <!-- Main Balance Card -->
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4 text-white h-100 position-relative overflow-hidden"
+             style="background: linear-gradient(135deg, #0d6efd 0%, #0a4da6 100%);">
+
+            <!-- Subtle Decorative Watermark Circle -->
+            <div class="position-absolute end-0 bottom-0 translate-middle-x opacity-10 pointer-events-none" style="margin-right: -50px; margin-bottom: -50px;">
+
+            </div>
+
+            <div class="card-body p-4 p-md-5 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <span class="text-uppercase text-white-50 fs-7 fw-bold tracking-wider">Available Balance</span>
+                        <h1 class="display-4 fw-bold mb-0 mt-1">${{ "%.2f"|format(account.balance) }}</h1>
+                    </div>
+                    <span class="badge bg-primary bg-opacity-20 backdrop-blur text-white px-3 py-2 rounded-pill fs-7">USD ($)</span>
+                </div>
+
+                <div class="pt-3 border-top border-white border-opacity-10 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-white-50 fs-7 d-block">Credit Limit</span>
+                        <span class="fw-semibold fs-6">${{ "%.2f"|format(account.credit_limit) }}</span>
+                    </div>
+                    <div>
+                        <span class="text-white-50 fs-7 d-block">Daily Transfer Limit</span>
+                        <span class="fw-semibold fs-6">$50,000.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Card -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-white">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <h6 class="fw-bold text-dark mb-3">Security & Limits</h6>
+
+                <div class="mb-3 p-3 bg-light rounded-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="text-muted fs-7">2FA Security</span>
+                        <span class="badge bg-success">Enabled</span>
+                    </div>
+                    <small class="text-secondary fs-8">Your account is secured with session token authentication.</small>
+                </div>
+
+                <div class="p-3 bg-light rounded-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="text-muted fs-7">Credit Line Usage</span>
+                        <span class="fw-bold fs-7">0%</span>
+                    </div>
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Financial Actions Header -->
+<h5 class="fw-bold text-dark mb-3">Quick Actions</h5>
+
+<!-- Banking Action Grid -->
+<div class="row g-3 mb-5">
+    <div class="col-6 col-md-3">
+        <a href="{{ url_for('bank.check_balance') }}" class="card border-0 shadow-sm rounded-4 text-decoration-none text-dark action-card h-100 transition-all">
+            <div class="card-body p-4 text-center">
+                <div class="icon-shape bg-primary-subtle text-primary rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px;">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
+                <h6 class="fw-bold mb-1">Balance</h6>
+                <span class="text-muted fs-7">View details</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-3">
+        <a href="{{ url_for('bank.deposit') }}" class="card border-0 shadow-sm rounded-4 text-decoration-none text-dark action-card h-100 transition-all">
+            <div class="card-body p-4 text-center">
+                <div class="icon-shape bg-success-subtle text-success rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px;">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg>
+                </div>
+                <h6 class="fw-bold mb-1">Deposit</h6>
+                <span class="text-muted fs-7">Add funds</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-3">
+        <a href="{{ url_for('bank.withdraw') }}" class="card border-0 shadow-sm rounded-4 text-decoration-none text-dark action-card h-100 transition-all">
+            <div class="card-body p-4 text-center">
+                <div class="icon-shape bg-warning-subtle text-warning rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px;">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12H4"></path></svg>
+                </div>
+                <h6 class="fw-bold mb-1">Withdraw</h6>
+                <span class="text-muted fs-7">Get cash</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-3">
+        <a href="{{ url_for('bank.transfer') }}" class="card border-0 shadow-sm rounded-4 text-decoration-none text-dark action-card h-100 transition-all">
+            <div class="card-body p-4 text-center">
+                <div class="icon-shape bg-info-subtle text-info rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px;">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                </div>
+                <h6 class="fw-bold mb-1">Transfer</h6>
+                <span class="text-muted fs-7">Send money</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Recent Transactions Placeholder (Professional Banking Touch) -->
+<div class="card border-0 shadow-sm rounded-4 bg-white">
+    <div class="card-header bg-transparent border-0 p-4 d-flex justify-content-between align-items-center">
+        <h5 class="fw-bold text-dark mb-0">Recent Activity</h5>
+        <span class="badge bg-light text-secondary">Real-Time</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light fs-7 text-uppercase text-muted">
+                    <tr>
+                        <th class="ps-4">Transaction</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th class="text-end pe-4">Amount</th>
+                    </tr>
+                </thead>
+                <tbody class="fs-7">
+                    <tr>
+                        <td class="ps-4 fw-semibold text-dark">System Account Initialization</td>
+                        <td><span class="badge bg-success-subtle text-success">Credit</span></td>
+                        <td class="text-muted">Today</td>
+                        <td class="text-end pe-4 fw-bold text-success">+${{ "%.2f"|format(account.balance) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
